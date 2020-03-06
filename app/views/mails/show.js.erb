@@ -1,0 +1,25 @@
+mailObject = "<%=@mail.object%>"
+mailContent = "<td rowspan='0'><div><%=@mail.body%>"
+deleteButton = "</div><div class='text-center'><%=j link_to(raw('<button type=\'button\' class=\'btn btn-sm btn-primary m-2\'>Supprimer</button>'),{:action => :destroy, :controller => :mails, id: @mail}, :method => :delete, remote: true)%>"
+readButton = "<%=j link_to(raw('<button type=\'button\' class=\'btn btn-sm btn-primary m-2\'>Marquer comme non lu</button>'), {:action => :update, :controller => :mails, id: @mail}, :method => :put, data: {remote: true, params: {read: false}.to_param})%></div></td>"
+
+
+colEmailObject = document.getElementById("#js-change-inner")
+//Change le nom de la colonne par l'objet du mail
+colEmailObject.classList.add("h3")
+colEmailObject.innerHTML = mailObject
+
+//Met le texte en police normale
+
+//Affiche le mail, supprime l'affichage du precedent si present 
+mailPresent = document.querySelector("tbody > tr > td:nth-of-type(2)")
+
+if (mailPresent != null)
+  mailPresent.remove()
+
+row = document.querySelector("tbody > tr")
+rowMailObject = document.getElementById("#js-mail<%=@mail.id%>").querySelector("a")
+console.log(rowMailObject)
+rowMailObject.classList.remove("font-weight-bold")
+
+row.insertAdjacentHTML("beforeend", mailContent + deleteButton + readButton)

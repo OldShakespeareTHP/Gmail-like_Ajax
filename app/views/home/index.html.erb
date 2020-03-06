@@ -1,22 +1,35 @@
+<%# <script src="table_tasks.js"></script>
+<script src="dropdown.js"></script> %>
+<script src="https://kit.fontawesome.com/5cf102ea06.js" crossorigin="anonymous"></script>
+
+
 <h1 class="text-center mb-4">Welcome to my todolist app</h1>
 <%= render 'layouts/task_form'  %>
 <div class="container">
-  <ul>
-  <% @categories.each do  |category|%>
-  <li><%= category.title  %></li>
-  <div class="card">
-    <ul>
-      <% category.tasks.each do |task|  %>
-      <li>
-        <%= task.title  %>
-        <% unless task.deadline.nil? %>
-          , to read: <%= task.deadline.strftime('%D')  %>
-        <% end %>
+  <ul class="nav nav-tabs row">
+    <% @categories.each do  |category|%>
+    <div class="col-4">
+      <li class="nav-item">
+        <a class="category-title nav-link" id="category<%= category.id %>"><%= category.title  %></a>
       </li>
-      <% end %>
-    </ul>
-  </div>
-  <% end %>
+    <div class="card">
+      <ul>
+        <div class="category-content" id="category-content<%= category.id %>">
+        <% category.tasks.each do |task|  %>
+          <li class="task-content" id="task<%= task.id %>">
+            <span><%= task.title  %>
+            <% unless task.deadline.nil? %>
+              , to read: <%= task.deadline.strftime('%D')  %>
+            <% end %></span>
+            <%= check_box_tag :task_status, 1, task.status, data: { remote: true, url: task_path(task), method: "put" }%>
+            <%= link_to(raw("<span class=\"fas fa-trash test-dark\"></span>"),{:action => :destroy, :controller => :tasks, id: task}, :method => :delete, remote: true)  %>
+          </li>
+        <% end %>
+        </div>
+      </ul>
+    </div>
+    </div>
+    <% end %>
   </ul>
 </div>
 
@@ -31,3 +44,26 @@
     <% end %>
   </div>
 </div>
+
+
+<div class="modal" tabindex="-1" role="dialog" id="myModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Modal body text goes here.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

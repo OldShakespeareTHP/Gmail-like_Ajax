@@ -1,0 +1,23 @@
+<div class="row">
+  <%= link_to 'Recevoir un email', mails_path, method: :post, action: :create, class: "btn btn-dark col-4 offset-md-4", remote: true %>
+</div>
+
+<div class="p-4">
+<table class="table pr-5">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col" style="width: 30%" div="col-4">Liste des emails</th>
+      <th scope="col" style="width: 70%" id="#js-change-inner">Email sélectionné</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%@mails.each do |mail|%>
+      <tr id="#js-mail<%=mail.id%>">
+        <td><%=link_to mail.object, mail_path(mail), class: "text-dark" + already_read?(mail), method: :get, action: :show, remote: true %></td>
+      </tr>
+    <%end%>
+  </tbody>
+</table>
+</div>
+
+

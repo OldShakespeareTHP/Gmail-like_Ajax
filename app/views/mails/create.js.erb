@@ -1,0 +1,12 @@
+newMail = "<tr id='#js-mail<%=@mail.id%>'><td><%=j link_to @mail.object, mail_path(@mail), class: 'text-dark font-weight-bold', method: :get, action: :show, remote: true %></td></tr>"
+mailPresent = document.querySelector("tbody > tr > td:nth-of-type(2)")
+document.querySelector("tbody").insertAdjacentHTML("afterbegin", newMail)
+
+//Si on est en train d'afficher un mail, deplace l'affichage sur le tablerow du nouveau mail
+if (mailPresent != null)
+{
+  mailPresent.remove()
+  row = document.querySelector("tbody > tr")
+  row.insertAdjacentHTML("beforeend", mailContent + deleteButton + readButton)
+}
+

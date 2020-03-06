@@ -1,0 +1,13 @@
+//Remet l'en-tete a 'Email Selectionne', taille normale
+colEmailObject = document.getElementById("#js-change-inner")
+colEmailObject.classList.remove("h3")
+colEmailObject.innerHTML="Email sélectionné"
+
+//Supprime la colonne avec le mail
+tdMail = document.querySelector("tbody > tr > td:nth-of-type(2)")
+tdMail.remove()
+
+//Supprime la ligne correspondant au mail
+trMail = document.getElementById("#js-mail<%=@mail.id%>")
+console.log(trMail)
+trMail.remove()
